@@ -16,14 +16,15 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Roboto';
+
+#app {  
   text-align: center;
   margin-top: 222px;
   margin-bottom: 155px;
 }
 
 body {
+  font-family: 'Roboto';
   background-color: #f1f1f1;
 }
 

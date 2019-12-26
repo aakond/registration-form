@@ -1,28 +1,30 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <RegistrationForm/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import RegistrationForm from './components/RegistrationForm.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    RegistrationForm
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto';
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 222px;
+  margin-bottom: 155px;
 }
+
+body {
+  background-color: #f1f1f1;
+}
+
 </style>

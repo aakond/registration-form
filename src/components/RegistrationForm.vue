@@ -29,30 +29,30 @@
             <br>
             <input class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow " type="text" v-model="firstname" placeholder="Your first name" >
           </div>
-          <div class="reg-form__sign-up__input-element">
+          <div class="reg-form__sign-up__input-element right-column">
             <div class="main main__gray label">Last name</div>
             <br>
-            <input class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow " type="text" v-model="lastname" placeholder="Your last name" >
+            <input class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow" type="text" v-model="lastname" placeholder="Your last name" >
           </div>
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">Country</div>
             <br>
-            <select class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow " placeholder="Select" ></select>
+            <select class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow" placeholder="Select" ></select>
           </div>
-          <div class="reg-form__sign-up__input-element">
+          <div class="reg-form__sign-up__input-element right-column">
             <div class="main main__gray label">City</div>
             <br>
-            <select class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow " placeholder="Select" ></select>
+            <select class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow" placeholder="Select" ></select>
           </div>
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">Date of birth</div>
             <br>
-            <input class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow " type="date" placeholder="" >
+            <input class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow" type="date" placeholder="" >
           </div>
-          <div class="reg-form__sign-up__input-element">
+          <div class="reg-form__sign-up__input-element  right-column">
             <div class="main main__gray label">Zip code</div>
             <br>
-            <input class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow " type="text" placeholder="Code" >
+            <input class="main main__black reg-form__sign-up__input reg-form__sign-up__input__narrow" type="text" placeholder="Code" >
           </div>
           <button class="reg-form__sign-up__button">SIGN UP</button>
       </div>
@@ -113,8 +113,6 @@ export default {
     display: flex;
 }
 
-
-
 .reg-form {
     max-width: 608px;
     margin-top: 54px;
@@ -147,7 +145,8 @@ export default {
         &__button {
             height: 64px;
             width: 324px;
-            top: calc(50% - 64px/2);
+            margin-top: 46px;
+            margin-bottom: 87px;
             background: #0056D8;
             border-radius: 0px 20px;
             font-family: Roboto;
@@ -187,4 +186,8 @@ export default {
         }
     }
 }    
+
+.right-column {
+    margin-left: 24px;
+}
 </style>

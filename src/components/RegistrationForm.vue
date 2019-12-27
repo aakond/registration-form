@@ -259,5 +259,4 @@ option {
 .right-column {
     margin-left: 24px;
 }
-
 </style>

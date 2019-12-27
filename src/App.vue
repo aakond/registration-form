@@ -24,6 +24,7 @@ export default {
 }
 
 body {
+  min-width: 720px;
   font-family: 'Roboto';
   background-color: #f1f1f1;
 }

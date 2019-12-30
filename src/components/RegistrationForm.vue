@@ -18,12 +18,12 @@
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">Login<span class="main__red">*</span></div>
             <br>
-            <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__wide " type="text" v-model="login" placeholder="Your login" >
+            <input  @change="onRequiredFieldsChanged" class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__wide " type="text" v-model="login" placeholder="Your login" >
           </div>
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">Email<span class="main__red">*</span></div>
             <br>
-            <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__wide " type="text" v-model="email" placeholder="Your email" >
+            <input @change="onRequiredFieldsChanged" class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__wide " type="text" v-model="email" placeholder="Your email" >
           </div>
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">Password</div>
@@ -43,7 +43,7 @@
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">Country<span class="main__red">*</span></div>
             <br>
-            <select required id="countrySelect" v-model="selectedCountry" @click="onSelectClicked" @change="onCountryChanged" class="main reg-form__sign-up__input reg-form__sign-up__input__select reg-form__sign-up__input__narrow">
+            <select required id="countrySelect" v-model="selectedCountry" @change="onCountryChanged" class="main reg-form__sign-up__input reg-form__sign-up__input__select reg-form__sign-up__input__narrow">
                 <option value="" disabled selected hidden>Your country</option>
                 <option v-for="country in locations" :value="country" :key="country.country">{{country.country}}</option>
             </select>
@@ -51,7 +51,7 @@
           <div class="reg-form__sign-up__input-element right-column">
             <div class="main main__gray label">City<span class="main__red">*</span></div>
             <br>
-            <select required id="citySelect" v-model="selectedCity" @click="onSelectClicked" class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__select reg-form__sign-up__input__narrow" disabled>
+            <select required id="citySelect" v-model="selectedCity" @change="onRequiredFieldsChanged" class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__select reg-form__sign-up__input__narrow" disabled>
                 <option value="" disabled selected hidden>Your city</option>
                 <option  v-for="city in selectedCountry.cities" :key="city">{{city}}</option>
             </select>
@@ -66,12 +66,12 @@
             <br>
             <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__narrow" type="text" placeholder="Code" >
           </div>
-          <div class="main main__dark-gray" v-if="errors.length">
-                Please fill the following field(s):
-                <br>
-                    <span v-for="error in errors" :key="error">{{ error }}<br></span>
-        </div>              
-          <input type="submit" class="reg-form__sign-up__button" value="SIGN UP">
+          <div class="error-message" v-if="errors.length">
+            Please fill the following field(s):
+            <br>
+            <span v-for="error in errors" :key="error">{{ error }}<br></span>
+          </div>           
+          <input disabled id="submitButton" type="submit" class="reg-form__sign-up__button" value="SIGN UP">
             
 
       </div>
@@ -128,11 +128,16 @@ export default {
    },
    
     methods: {
-        onSelectClicked: function(event) {
-            document.getElementById(event.target.id).addClass("main__light-gray");
-        },
         onCountryChanged: function() {
             document.getElementById('citySelect').disabled = false;
+            this.onRequiredFieldsChanged();
+        },
+        onRequiredFieldsChanged: function() {
+            if (this.login && this.email && this.selectedCountry && this.selectedCity) {
+                document.getElementById('submitButton').disabled = false;
+            } else {
+                document.getElementById('submitButton').disabled = true;
+            }
         },
         checkForm: function(e) {
             if (this.login && this.email && this.selectedCountry && this.selectedCity) {
@@ -231,7 +236,7 @@ option {
     max-width: 608px;
     margin-top: 54px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;    
     text-align: center;
     
 
@@ -253,9 +258,8 @@ option {
 
     &__sign-up {
         background: #FFFFFF;
-        height: 991px;
-        padding-left: 64px;
-        padding-right: 64px;
+        height: auto;
+        padding: 0 64px 87px;
 
         &__button {
             -webkit-appearance: none;
@@ -263,8 +267,7 @@ option {
             cursor: pointer;
             height: 64px;
             width: 324px;
-            margin-top: 46px;
-            margin-bottom: 87px;
+            margin-top: 29px;
             background: #0056D8;
             border-radius: 0px 20px;
             font-family: Roboto;
@@ -272,12 +275,19 @@ option {
             line-height: 23px;
             color: #FFFFFF;
             outline: none;
+            display: inline-block;
 
             &:hover {
                 background: #003585;
             }
 
-            &:click {
+            &:disabled {                
+                background: #C1C1C1;
+                cursor: default;
+            }
+
+            &:active {
+                margin-top: 50px;
                 width: 292px;
                 height: 56px;
             }
@@ -355,5 +365,18 @@ option {
 
 .right-column {
     margin-left: 24px;
+}
+
+.error-message {
+    width: 456px;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: left;
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 10px 0 10px 24px;
+    color: #E90000;
+    background-color: rgb(255, 218, 218);
+    display: inline-block;
 }
 </style>

@@ -66,14 +66,15 @@
             <br>
             <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__narrow" type="text" placeholder="Code" >
           </div>
-          <div class="error-message" v-if="errors.length">
+          <div class="message message__error" v-if="errors.length">
             Please fill the following field(s):
             <br>
             <span v-for="error in errors" :key="error">{{ error }}<br></span>
+          </div>
+          <div class="message message__success" v-if="isSuccessMessageDisplayed">
+            You have been successfully registered!
           </div>           
-          <input disabled id="submitButton" @click="showSuccessMessage" type="submit" class="reg-form__sign-up__button" value="SIGN UP">
-            
-
+          <input disabled id="submitButton" @click="showSuccessMessage" type="submit" class="reg-form__sign-up__button" value="SIGN UP">            
       </div>
       </form>
   </div>
@@ -97,6 +98,7 @@ export default {
           type: String,
           default: ""
       },
+      isSuccessMessageDisplayed: false,
       
     },
    data() {
@@ -123,7 +125,7 @@ export default {
                    cities: ["Some city 51", "Some city 52", "Some city 53", "Some city 54", "Some city 55", "Some city 56"]
                }
            ],
-           errors: [],
+           errors: [],           
        }
    },
    
@@ -161,8 +163,16 @@ export default {
 
             e.preventDefault();                
         },
-        showSuccessMessage: function() {
-            console.log("fjioewjiofjweo");
+        showSuccessMessage: function(e) {
+            e.preventDefault();
+            if (this.isFormValid) {
+                this.isSuccessMessageDisplayed = true;
+            }
+        }
+    },
+    computed: {
+        isFormValid() {
+            return this.login && this.email && this.selectedCountry && this.selectedCity;
         }
     }
 }    
@@ -370,16 +380,24 @@ option {
     margin-left: 24px;
 }
 
-.error-message {
+.message {
     width: 456px;
     font-size: 14px;
     line-height: 18px;
     text-align: left;
     border: 1px solid;
     border-radius: 4px;
-    padding: 10px 0 10px 24px;
-    color: #E90000;
-    background-color: rgb(255, 218, 218);
+    padding: 10px 0 10px 24px;    
     display: inline-block;
+    
+    &__error {
+        color: #E90000;
+        background-color: rgb(255, 218, 218);
+    }
+
+    &__success {
+        color: rgb(22, 136, 83);
+        background-color: rgb(215, 255, 237);
+    }
 }
 </style>

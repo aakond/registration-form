@@ -8,7 +8,7 @@
 import RegistrationForm from './components/RegistrationForm.vue'
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     RegistrationForm
   }
@@ -25,7 +25,7 @@ export default {
 
 body {
   min-width: 720px;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   background-color: #f1f1f1;
 }
 

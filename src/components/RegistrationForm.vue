@@ -2,7 +2,7 @@
 <template>
   <div class="reg-form">
       <form
-        id="app"
+        id="regForm"
         @submit="checkForm"
         method="post"
       >
@@ -71,7 +71,7 @@
             <br>
             <span v-for="error in errors" :key="error">{{ error }}<br></span>
           </div>           
-          <input disabled id="submitButton" type="submit" class="reg-form__sign-up__button" value="SIGN UP">
+          <input disabled id="submitButton" @click="showSuccessMessage" type="submit" class="reg-form__sign-up__button" value="SIGN UP">
             
 
       </div>
@@ -83,7 +83,7 @@
 /* eslint-disable */
 
 export default {
-  name: 'RegistrationForm',
+  name: "RegistrationForm",
   props: {
       login: String,
       email: String,
@@ -129,14 +129,14 @@ export default {
    
     methods: {
         onCountryChanged: function() {
-            document.getElementById('citySelect').disabled = false;
+            document.getElementById("citySelect").disabled = false;
             this.onRequiredFieldsChanged();
         },
         onRequiredFieldsChanged: function() {
             if (this.login && this.email && this.selectedCountry && this.selectedCity) {
-                document.getElementById('submitButton').disabled = false;
+                document.getElementById("submitButton").disabled = false;
             } else {
-                document.getElementById('submitButton').disabled = true;
+                document.getElementById("submitButton").disabled = true;
             }
         },
         checkForm: function(e) {
@@ -147,19 +147,22 @@ export default {
             this.errors = [];
 
             if (!this.login) {
-                this.errors.push('Login');
+                this.errors.push("Login");
             }
             if (!this.email) {
-                this.errors.push('Email');
+                this.errors.push("Email");
             }
             if (!this.selectedCountry) {
-                this.errors.push('Country');
+                this.errors.push("Country");
             }
             if (!this.selectedCity) {
-                this.errors.push('City');
+                this.errors.push("City");
             }
 
             e.preventDefault();                
+        },
+        showSuccessMessage: function() {
+            console.log("fjioewjiofjweo");
         }
     }
 }    

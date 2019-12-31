@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     actions: {
-        saveFormData(context, formData) {
-            context.commit('addFormData', formData);
+        saveFormData({commit}, formData) {
+            commit('addFormData', formData);
         }
     },
     mutations: {

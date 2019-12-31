@@ -84,27 +84,19 @@
 
 export default {
   name: "RegistrationForm",
-  props: {
-            login: String,
-            email: String,
-            password: String,
-            firstname: String,
-            lastname: String,
-            selectedCountry: {
-                type: String,
-                default: ""
-            },
-            selectedCity: {
-                type: String,
-                default: ""
-            },
-            dateOfBirth: Date,
-            zipCode: String,            
-            isSuccessMessageDisplayed: false,      
-    },
-   data() {
+  data() {
        return {           
-           errors: [],           
+            errors: [],
+            login: "",
+            email: "",
+            password: "",
+            firstname: "",
+            lastname: "",
+            selectedCountry: "",
+            selectedCity: "",
+            dateOfBirth: new Date(Date.now()).toISOString().slice(0,10),
+            zipCode: "",            
+            isSuccessMessageDisplayed: false,              
        }
    },
    

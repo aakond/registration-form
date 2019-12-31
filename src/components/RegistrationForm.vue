@@ -121,7 +121,6 @@ export default {
             }
         },
         checkForm: function() {
-            console.log('gjoijgoej1');
             if (this.login && this.email && this.selectedCountry && this.selectedCity) {
                 return true;
             }
@@ -149,7 +148,6 @@ export default {
             }
         },
         submit: function() {
-            console.log('gjoijgoej2');
             if (this.checkForm()) {
                 this.showSuccessMessage();
                 this.$store.dispatch("saveFormData", {

@@ -3,15 +3,14 @@
   <div class="reg-form">
       <form
         id="regForm"
-        @submit="checkForm"
         method="post"
       >
         <div class="reg-form__new-user">
             <div class="title reg-form__new-user__title">New User</div>
             <div class="main reg-form__new-user__user-info">
-                <div class="main__dark-gray"> {{firstname}} {{lastname}} / <span class="main__gray">{{ login }}</span></div>                
+                <div class="main__dark-gray"> {{ firstname }} {{ lastname }} / <span class="main__gray">{{ login }}</span></div>                
             </div>
-            <div class="main main__dark-gray">{{email}}</div>
+            <div class="main main__dark-gray">{{ email }}</div>
         </div>
       <div class="reg-form__sign-up">
           <div class="title reg-form__sign-up__title">Sign Up</div>
@@ -28,7 +27,7 @@
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">Password</div>
             <br>
-            <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__wide " type="password" placeholder="Your password" >
+            <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__wide " type="password" v-model="password" placeholder="Your password" >
           </div>
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">First name</div>
@@ -59,12 +58,12 @@
           <div class="reg-form__sign-up__input-element">
             <div class="main main__gray label">Date of birth</div>
             <br>
-            <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__datepicker reg-form__sign-up__input__narrow" type="date" placeholder="" >
+            <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__datepicker reg-form__sign-up__input__narrow" type="date" v-model="dateOfBirth" placeholder="" >
           </div>
           <div class="reg-form__sign-up__input-element  right-column">
             <div class="main main__gray label">Zip code</div>
             <br>
-            <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__narrow" type="text" placeholder="Code" >
+            <input class="main main__dark-gray reg-form__sign-up__input reg-form__sign-up__input__narrow" type="text" v-model="zipCode" placeholder="Code" >
           </div>
           <div class="message message__error" v-if="errors.length">
             Please fill the following field(s):
@@ -74,7 +73,7 @@
           <div class="message message__success" v-if="isSuccessMessageDisplayed">
             You have been successfully registered!
           </div>           
-          <input disabled id="submitButton" @click="showSuccessMessage" type="submit" class="reg-form__sign-up__button" value="SIGN UP">            
+          <input disabled id="submitButton" @click.prevent="submit" type="submit" class="reg-form__sign-up__button" value="SIGN UP">            
       </div>
       </form>
   </div>
@@ -86,45 +85,25 @@
 export default {
   name: "RegistrationForm",
   props: {
-      login: String,
-      email: String,
-      firstname: String,
-      lastname: String,
-      selectedCountry: {
-          type: String,
-          default: ""
-      },
-      selectedCity: {
-          type: String,
-          default: ""
-      },
-      isSuccessMessageDisplayed: false,
-      
+            login: String,
+            email: String,
+            password: String,
+            firstname: String,
+            lastname: String,
+            selectedCountry: {
+                type: String,
+                default: ""
+            },
+            selectedCity: {
+                type: String,
+                default: ""
+            },
+            dateOfBirth: Date,
+            zipCode: String,            
+            isSuccessMessageDisplayed: false,      
     },
    data() {
-       return {
-           locations: [
-               {
-                   country: "Some country 1",
-                   cities: ["Some city 11", "Some city 12", "Some city 13", "Some city 14", "Some city 15", "Some city 16"]
-               },
-               {
-                   country: "Some country 2",
-                   cities: ["Some city 21", "Some city 22", "Some city 23", "Some city 24", "Some city 25", "Some city 26"]
-               },
-               {
-                   country: "Some country 3",
-                   cities: ["Some city 31", "Some city 32", "Some city 33", "Some city 34", "Some city 35", "Some city 36"]
-               },
-               {
-                   country: "Some country 4",
-                   cities: ["Some city 41", "Some city 42", "Some city 43", "Some city 44", "Some city 45", "Some city 46"]
-               },
-               {
-                   country: "Some country 5",
-                   cities: ["Some city 51", "Some city 52", "Some city 53", "Some city 54", "Some city 55", "Some city 56"]
-               }
-           ],
+       return {           
            errors: [],           
        }
    },
@@ -141,7 +120,8 @@ export default {
                 document.getElementById("submitButton").disabled = true;
             }
         },
-        checkForm: function(e) {
+        checkForm: function() {
+            console.log('gjoijgoej1');
             if (this.login && this.email && this.selectedCountry && this.selectedCity) {
                 return true;
             }
@@ -161,18 +141,37 @@ export default {
                 this.errors.push("City");
             }
 
-            e.preventDefault();                
-        },
-        showSuccessMessage: function(e) {
-            e.preventDefault();
+            return false;              
+        },            
+        showSuccessMessage: function() {
             if (this.isFormValid) {
                 this.isSuccessMessageDisplayed = true;
             }
-        }
+        },
+        submit: function() {
+            console.log('gjoijgoej2');
+            if (this.checkForm()) {
+                this.showSuccessMessage();
+                this.$store.dispatch("saveFormData", {
+                    login: this.login,
+                    email: this.email,
+                    password: this.password,
+                    firstname: this.firstname,
+                    lastname: this.lastname,
+                    selectedCountry: this.selectedCountry,
+                    selectedCity: this.selectedCity,
+                    dateOfBirth: this.dateOfBirth,
+                    zipCode: this.zipCode      
+                })
+            }
+        },
     },
     computed: {
         isFormValid() {
             return this.login && this.email && this.selectedCountry && this.selectedCity;
+        },
+        locations() {
+            return this.$store.getters.getLocations;
         }
     }
 }    
